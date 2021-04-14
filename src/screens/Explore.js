@@ -1,8 +1,10 @@
 import { useTheme } from '@react-navigation/native';
 import React from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Animated} from 'react-native';
 import {useSelector} from 'react-redux';
+import { scrollY, translateY } from '../animations/hideHeader';
 import Card from '../components/Card';
+import Header from '../components/Header';
 
 const LittleCard = ({name}) => {
   return (
@@ -18,6 +20,13 @@ const Explore = () => {
 
   return (
     <View style={styles.container}>
+      <Animated.View
+        style={{
+          zIndex: 99,
+          transform: [{translateY:translateY}],
+        }}>
+        <Header />
+      </Animated.View>
       <FlatList
         ListHeaderComponent={
           <View>
@@ -42,6 +51,9 @@ const Explore = () => {
           />
         )}
         keyExtractor={item => item.id.videoId}
+        onScroll={(e) => {
+          scrollY.setValue(e.nativeEvent.contentOffset.y);
+        }}
       />
     </View>
   );

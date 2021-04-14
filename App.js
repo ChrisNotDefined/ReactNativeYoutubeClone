@@ -55,7 +55,6 @@ const RootHome = () => {
   const {colors} = useTheme();
   return (
     <>
-      <Header />
       <Tabs.Navigator
         screenOptions={({route}) => ({
           tabBarIcon: ({color}) => {

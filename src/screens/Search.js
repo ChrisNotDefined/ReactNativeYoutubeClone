@@ -13,6 +13,7 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import {useSelector, useDispatch} from 'react-redux';
 
 import MiniCard from '../components/MiniCard';
+import {YT_KEY} from '../keys';
 import {ADD} from '../redux/reducer';
 
 // https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=dnb&type=video&key=AIzaSyDsr-NTfx127RUoLgUtpRmuEeKji4IYgfc
@@ -27,13 +28,17 @@ const SearchScreen = () => {
   const fetchData = () => {
     setLoading(true);
     fetch(
-      `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${value}&type=video&key=API_KEY`,
+      `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${value}&type=video&key=${YT_KEY}`
     )
       .then(res => res.json())
       .then(data => {
         //setMiniCardData(data.items);
         dispatch({type: ADD, payload: data.items});
         setLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+        alert('Somethig went wrong: ', err);
       });
   };
 
